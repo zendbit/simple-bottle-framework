@@ -14,7 +14,7 @@ class SQLiteConn():
         
         try:
             # connect database
-            conn = sqlite3.connect(self.connector.db_names.get(self.connector.db_config).get('db_list').get(db_name), check_same_thread=False)
+            conn = sqlite3.connect(self.connector.db_config.get('db').get(db_name), check_same_thread=False)
             conn.row_factory = sqlite3.Row
             # register function
             for fn in self.connector.create_function:
@@ -43,13 +43,13 @@ class SQLiteConn():
         return conn
 
 class Connector():
-    def __init__(self, db_names, db_config):
+    def __init__(self, db_config):
         '''
             constructor
+            if db_driver is None should user default database driver
         '''
         
         # init database path location
-        self.db_names = db_names
         self.db_config = db_config
         
         self.create_function = []
@@ -62,11 +62,11 @@ class Connector():
         
         # check db connector driver
         # if connect to sqlite
-        if self.db_names.get(self.db_config).get('driver') == 'sqlite':
+        if self.db_config.get('driver') == 'sqlite':
             return SQLiteConn(self).connect(db_name)
             
         # if connect to postgresql
-        elif self.db_names.get(self.db_config).get('driver') == 'postgresql':
+        elif self.db_config.get('driver') == 'postgresql':
             pass
             
     # string quote

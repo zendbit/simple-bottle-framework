@@ -1,5 +1,5 @@
 # import bottle framework
-from baseApp import BaseApp
+from baseapp import BaseApp
 import os
 
 # main class of framework
@@ -44,14 +44,20 @@ class App(BaseApp):
         # database list
         # use db_sqlite for sqlite
         # user db_postgres for postgres
-        '''self.config['database'] = {'db_sqlite':{'driver':'sqlite',
-            'db_list':{'custom_db_name':'path_to_sqlite_file.db'))}},
-            'db_postgres':{'driver':'postgresql',
-            'db_list':{'custom_db_name':{'username':'yourusername', 'port':5432, 'password':'yourpassword'}}}}
-
-        # default database to use
-        self.config['default_db_config'] = 'db_sqlite'
-        '''
+        self.config['database'] = {
+            'sqlite':{
+                'driver':'sqlite',
+                'db':{
+                    'scheduler_db_task':os.path.sep.join((os.getcwd(), 'models', 'scheduler', 'db', 'task.db'))
+                }
+            },
+            'postgres':{
+                'driver':'postgres',
+                'db':{
+                    'custom_db_name':{'username':'yourusername', 'port':5432, 'password':'yourpassword'}
+                }
+            }
+        }
 
     # override set route
     # if you need custom route
