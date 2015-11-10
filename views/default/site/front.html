@@ -1,7 +1,15 @@
 <%
 include(data.get('app').get_template_path('site.header'))
 %>
-frontier! <a href="/p/home/page/index">back to home</a>
+<div style="position:absolute;top:0px;left:0px;width:100%;background:#d8d8d8;">
+    <ul style="display:inline;list-style:none;color:#FFFFFF;">
+        <li id="job_add_new" style="float:left;margin:10px 5px 10px 20px;background:#333333;padding:10px;cursor:pointer;">Add Job</li>
+        <li id="job_list_view" style="float:left;margin:10px 5px 10px 5px;background:#333333;padding:10px;cursor:pointer;">Job List</li>
+    </ul>
+</div>
+<div>
+    
+</div>
 <%
 include(data.get('app').get_template_path('site.footer'))
 %>
