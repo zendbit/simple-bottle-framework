@@ -1,4 +1,5 @@
 from models.scheduler.taskquery import TaskQuery
+from modules.token.unique import Unique
 
 import json
 
@@ -11,33 +12,32 @@ class Task():
     '''
     
     def __init__(self, app):
-        self.app = app
+        self.__app = app
+        self.__unique = Unique(app)
         
         # initialize connector to task database
         self.__task_query = TaskQuery(app.config.get('database').get('sqlite'))
         
     def add(self):
+        post = self.__app.req().POST
+        
+        if not self.__unique.validate(post.get('shared_key')):
+            return json.dumps({'invalid':'shared key'})
+        
+        post_data = json.loads(post.get('post_data'))
+        
+        insert_fields = []
+        insert_values = []
+        
+        for field in post_data:
+            insert_fields.append(field)
+            insert_values.append(post_data.get(field))
+        
         data = {
             'table':'tbl_task',
-            'insert_fields':[
-                'task_name',
-                'task_description',
-                'task_start',
-                'task_repeat',
-                'task_type',
-                'task_command'],
-            'insert_values':[
-                'test',
-                'desc',
-                '2015-05-05 22:30:33',
-                3600,
-                'url',
-                'http://babilu.com']
+            'insert_fields':insert_fields,
+            'insert_values':insert_values
         }
-        
-        post = self.app.req().POST
-        post_data = post.get('post_data')
-        
         
         return json.dumps(self.__task_query.insert(data))
         

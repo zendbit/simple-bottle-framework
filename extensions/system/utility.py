@@ -23,6 +23,7 @@ import traceback
 class Utility():
     # constructor
     def __init__(self):
+        pass
         
     # email format validator
     # parameter should be email address in string format
@@ -34,7 +35,7 @@ class Utility():
     def validate_email_format(self, email):
         if re.match('[a-zA-Z0-9._%-]+[@][a-zA-Z0-9._%-]+[.][a-zA-Z]+', email):
             return (True, 'Ok:val_em_1:Email is in well formed format')
-        
+            
         return (False, 'error:val_em_1:Email format must be in well formed format, like \'yourname@mydomain.com\'')
         
     # validate password length
